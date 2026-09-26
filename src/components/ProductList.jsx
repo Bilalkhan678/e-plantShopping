@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addToCart } from "../redux/CartSlice";
+import { addItem } from "../redux/CartSlice";
 
 const products = [
   // Aromatic Plants
@@ -159,7 +159,6 @@ function ProductList() {
 
   const cartItems = useSelector((state) => state.cart.items);
 
-  // Total quantity of all products
   const totalItems = cartItems.reduce(
     (total, item) => total + item.quantity,
     0
@@ -174,7 +173,7 @@ function ProductList() {
   return (
     <div className="products-page">
       <nav className="navbar">
-        <div className="nav-logo">🌿 Paradise Nursery</div>
+        <div className="nav-logo">🌿 e-plantShopping</div>
 
         <div className="nav-links">
           <Link to="/">Home</Link>
@@ -184,7 +183,7 @@ function ProductList() {
       </nav>
 
       <main className="products-container" id="plants">
-        <h1>Paradise Nursery Plants</h1>
+        <h1>e-plantShopping Plants</h1>
 
         {categories.map((category) => (
           <section className="category-section" key={category}>
@@ -212,7 +211,7 @@ function ProductList() {
                     </p>
 
                     <button
-                      onClick={() => dispatch(addToCart(product))}
+                      onClick={() => dispatch(addItem(product))}
                       disabled={isInCart(product.id)}
                     >
                       {isInCart(product.id)

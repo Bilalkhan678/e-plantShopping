@@ -1,10 +1,36 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { useState } from "react";
 import ProductList from "./components/ProductList";
 import CartItem from "./components/CartItem";
 import AboutUs from "./components/AboutUs";
 import "./App.css";
 
-function Home() {
+function App() {
+  const [showProducts, setShowProducts] = useState(false);
+  const [showCart, setShowCart] = useState(false);
+
+  const handleGetStarted = () => {
+    setShowProducts(true);
+    setShowCart(false);
+  };
+
+  const handleHome = () => {
+    setShowProducts(false);
+    setShowCart(false);
+  };
+
+  const handleCart = () => {
+    setShowCart(true);
+    setShowProducts(false);
+  };
+
+  if (showCart) {
+    return <CartItem />;
+  }
+
+  if (showProducts) {
+    return <ProductList />;
+  }
+
   return (
     <div className="home-page">
       <div className="home-overlay">
@@ -12,9 +38,11 @@ function Home() {
           <div className="nav-logo">🌿 Paradise Nursery</div>
 
           <div className="nav-links">
-            <Link to="/">Home</Link>
-            <Link to="/plants">Plants</Link>
-            <Link to="/cart">🛒 Cart</Link>
+            <button onClick={handleHome}>Home</button>
+
+            <button onClick={handleGetStarted}>Plants</button>
+
+            <button onClick={handleCart}>🛒 Cart</button>
           </div>
         </nav>
 
@@ -26,28 +54,15 @@ function Home() {
             beautiful collection of houseplants.
           </p>
 
-          <Link to="/plants" className="get-started-button">
+          <button
+            onClick={handleGetStarted}
+            className="get-started-button"
+          >
             Get Started
-          </Link>
+          </button>
         </div>
       </div>
     </div>
-  );
-}
-
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-
-        <Route path="/plants" element={<ProductList />} />
-
-        <Route path="/cart" element={<CartItem />} />
-
-        <Route path="/about" element={<AboutUs />} />
-      </Routes>
-    </BrowserRouter>
   );
 }
 
